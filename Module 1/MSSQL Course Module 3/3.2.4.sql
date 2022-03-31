@@ -14,7 +14,11 @@
 use Northwind;
 go
 
-DROP TABLE #Person
+if object_id('tempdb..#Person') is not null
+
+begin
+	DROP TABLE #Person
+end
 
 create table #Person (
 	Person varchar(50),
