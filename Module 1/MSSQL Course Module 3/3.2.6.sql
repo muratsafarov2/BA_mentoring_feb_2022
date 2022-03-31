@@ -9,13 +9,11 @@ use Northwind;
 go
 
 select 
-	Employees.LastName as 'User Name',
-	Employees1.LastName as Boss
-from 
-	Employees
-		inner join 
-			Employees as Employees1
-				on Employees.ReportsTo = Employees1.EmployeeID
+	e.LastName as 'User Name',
+	e1.LastName as Boss
+	from Employees as e
+		inner join Employees as e1
+			on e.ReportsTo = e1.EmployeeID
 
 go
 

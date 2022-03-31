@@ -4,37 +4,36 @@
 Высветить колонки CustomerID и City. 
 Запрос не должен высвечивать дублируемые записи. 
 Для проверки написать запрос, который высвечивает города, 
-которые встречаются более одного раза в таблице Customers. Это позволит проверить правильность запроса.
+которые встречаются более одного раза в таблице customers. Это позволит проверить правильность запроса.
 */
 
 use Northwind;
 go
 
 select
-	Customers.CustomerID as CustomerID,
-	Customers.City
-	from
-		Customers
-			inner join
-			Customers as Customers1
-				on Customers.City
-				= Customers1.City
-				and Customers.CustomerID
-				< Customers1.CustomerID
+	c.CustomerID as CustomerID,
+	c.City
+		from Customers as c
+		inner join
+		Customers as c1	
+			on c.City
+			= c1.City
+			and c.CustomerID
+			< c1.CustomerID
 
 union
 
 select 
-	Customers1.CustomerID as CustomerID,
-	Customers1.City
-	from
-		Customers
-			inner join
-			Customers as Customers1
-				on Customers.City
-				= Customers1.City
-				and Customers.CustomerID
-				< Customers1.CustomerID
+	c1.CustomerID as CustomerID,
+	c1.City
+		from Customers as c	
+		inner join
+		Customers as c1
+			on c.City
+			= c1.City
+			and c.CustomerID
+			< c1.CustomerID
+
 order by City
 
 go
