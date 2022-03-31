@@ -18,10 +18,10 @@ go
 select 
 	count(EmployeeID) as Amount, 
 	(
-		select concat(employees.LastName, ' ', employees.FirstName) 
-		from dbo.Employees as employees 
-		where employees.EmployeeID = orders.EmployeeID
+		select concat(e.LastName, ' ', e.FirstName) 
+		from dbo.Employees as e 
+		where e.EmployeeID = o.EmployeeID
 	) as Seller 
-from dbo.Orders as orders
+from dbo.Orders as o
 group by EmployeeID
 order by Amount desc;

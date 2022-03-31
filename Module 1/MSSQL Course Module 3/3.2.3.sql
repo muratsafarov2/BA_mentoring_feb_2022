@@ -32,29 +32,29 @@ go
 
 select 
 	case
-		when Employees.EmployeeID is null then 'ALL'
-		else Employees.FirstName
+		when e.EmployeeID is null then 'ALL'
+		else e.FirstName
 	end as Seller, 
-	COALESCE(Customers.ContactName, 'ALL') as Customer,
-	count(Orders.OrderID) as Amount
-from Employees 
-join Orders on Employees.EmployeeID = Orders.EmployeeID
-join Customers on Customers.CustomerID = Orders.CustomerID
-where year(Orders.OrderDate) = '1998'
+	COALESCE(c.ContactName, 'ALL') as Customer,
+	count(o.OrderID) as Amount
+from Employees as e
+join Orders as o on e.EmployeeID = o.EmployeeID
+join Customers as c on c.CustomerID = o.CustomerID
+where year(o.OrderDate) = '1998'
 group by 
 	grouping sets(
 		(),
-		(Employees.EmployeeID,
-		Employees.FirstName),
-		(Customers.CustomerID,
-		Customers.ContactName),
-		(Employees.EmployeeID, 
-		Customers.CustomerID,
-		Employees.FirstName, 
-		Employees.LastName, 
-		Customers.ContactName)
+		(e.EmployeeID,
+		e.FirstName),
+		(c.CustomerID,
+		c.ContactName),
+		(e.EmployeeID, 
+		c.CustomerID,
+		e.FirstName, 
+		e.LastName, 
+		c.ContactName)
 		)
 order by
-	Employees.FirstName asc,
-	Customers.ContactName asc,
+	e.FirstName asc,
+	c.ContactName asc,
 	Amount desc;
